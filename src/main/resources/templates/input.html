@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <title>Dodawanie</title>
+    <meta charset="UTF-8">
+    <style>
+        *{
+            font-family: Arial, Helvetica, sans-serif;
+            color: black;
+        }
+        nav{
+        background-color: rgba(45, 87, 126, 0.897);
+        padding: 20px;
+        }
+
+        #menu{
+            float: right;
+        }
+
+        .przy{
+            padding: 10px;
+            margin: 10px;
+            border: 1px solid rgb(178, 178, 221);
+            border-radius: 2px;
+            text-decoration: none;
+        }
+        span{
+            font-size: 35px;
+            margin: auto;
+            font-weight: bold;
+            color: white;
+        }
+        #kontener{
+            background-color: black;
+            width: 70%;
+            margin: 0 auto;
+        }
+        #wyszukiwarka{
+            background-color: rgb(125, 133, 148);
+            padding: 10px;
+            width: 40%;
+            border-bottom-right-radius: 4px;
+        }
+        #pasek{
+            width: 40%;
+            height: 20px;
+        }
+        #przycisk{
+            border-radius: 4px;
+            height: 25px;
+            color: black;
+            width: 80px;
+        }
+        .guziki{
+            border-radius: 4px;
+            height: 25px;
+            color: black;
+            width: 80px;
+        }
+        table.blueTable {
+            border: 1px solid #1C6EA4;
+            background-color: #EEEEEE;
+            width: 100%;
+            text-align: left;
+            border-collapse: collapse;
+        }
+        table.blueTable td, table.blueTable th {
+            border: 1px solid #AAAAAA;
+            padding: 3px 2px;
+        }
+        table.blueTable tbody td {
+            font-size: 13px;
+        }
+        table.blueTable tr:nth-child(even) {
+            background: #D0E4F5;
+        }
+        table.blueTable thead {
+            background: #1C6EA4;
+            background: -moz-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+            background: -webkit-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+            background: linear-gradient(to bottom, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+            border-bottom: 2px solid #444444;
+        }
+        table.blueTable thead th {
+            font-size: 15px;
+            font-weight: bold;
+            color: #FFFFFF;
+            border-left: 2px solid #D0E4F5;
+        }
+        table.blueTable thead th:first-child {
+        border-left: none;
+        }
+
+        table.blueTable tfoot {
+            font-size: 14px;
+            font-weight: bold;
+            color: #FFFFFF;
+            background: #D0E4F5;
+            background: -moz-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+            background: -webkit-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+            background: linear-gradient(to bottom, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+            border-top: 2px solid #444444;
+        }
+        table.blueTable tfoot td {
+            font-size: 14px;
+        }
+        table.blueTable tfoot .links {
+            text-align: right;
+        }
+        table.blueTable tfoot .links a{
+            display: inline-block;
+            background: #1C6EA4;
+            color: #FFFFFF;
+            padding: 2px 8px;
+            border-radius: 5px;
+        }
+
+    </style>
+</head>
+
+<body>
+<nav>
+    <span>Panel admina</span>
+    <div id="menu">
+        <a href="/" class="przy">Lista pracownikow</a>
+        <a href="/input" class="przy">Dodaj pracownika</a>
+    </div>
+</nav>
+<div>
+    <form th:action="@{/employee/save}" th:object="${Employee}" method="post" onsubmit="return walidacja()">
+        <label>First name:</label><br>
+        <input type="text" th:field="*{firstName}" name="firstName" required/>
+        <br/>
+
+        <label>Last name:</label> <br>
+        <input type="text" th:field="*{lastName}" name="lastName" required/>
+        <br/>
+
+        <label>Position:</label><br>
+        <input type="text" th:field="*{position}" name="position" required/>
+        <br/>
+
+        <label>Salary:</label><br>
+        <input type="number" min="0" max="100000" th:field="*{salary}" name="salary" required/>
+        <br/>
+        <br>
+        <input type="submit" value="Submit"/>
+    </form>
+
+    <script>
+    function walidacja() {
+        var firstName = document.getElementById("firstName").value;
+        var lastName = document.getElementById("lastName").value;
+        var position = document.getElementById("position").value;
+        var salary = document.getElementById("salary").value;
+
+        var nameRegex = /^[A-Za-z]+$/;
+        var numberRegex = /^\d+$/;
+
+        if (!firstName.match(nameRegex)) {
+            alert("Podaj poprawne imie");
+            return false;
+        }
+
+        if (!lastName.match(nameRegex)) {
+            alert("Podaj poprawne nazwisko");
+            return false;
+        }
+
+        if (!position.match(nameRegex)) {
+            alert("Podaj poprawne dane");
+            return false;
+        }
+
+        if (!salary.match(numberRegex) || parseInt(salary) < 0) {
+            alert("Podaj liczbe");
+            return false;
+        }
+
+        return true;
+    }
+
+    </script>
+</div>
+
+</body>
+
+
+</html>
